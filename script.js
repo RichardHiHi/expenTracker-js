@@ -1,23 +1,40 @@
 const submitBTN = document.querySelector(".submit-BTN");
 const inputName = document.querySelector(".input-name");
 const list = document.querySelector(".list");
-
 const inputMoney = document.querySelector(".input-money");
 
 let inc = 0,
     exp = 0,
     balance = 0;
+// let data = {
+//     total: {
+//         inc: 0,
+//         exp: 0,
+//     }
+//     balance = 0;
+// }
+
+// let transactions = [];
+
+
+// function showTransaction() {
+//     const transaction = {
+//         id: transactions.length,
+
+//     }
+// }
 
 function addTransaction(e) {
     e.preventDefault();
-    console.log(inputName.value);
-    console.log(typeof inputMoney.value);
+
     if (inputName.value && inputMoney.value) {
         let addClassList;
         if (inputMoney.value < 0) {
             addClassList = `item-exp`;
+            exp += -inputMoney.value;
         } else {
             addClassList = `item-inc`;
+            inc += +inputMoney.value;
         }
         const item = document.createElement("LI");
         item.classList.add("item");
@@ -34,26 +51,33 @@ function addTransaction(e) {
     }
 }
 
-function updateMoney() {
+function updateMoney(inputMoney) {
     const incMoney = document.querySelector(".inc-money");
     const expMoney = document.querySelector(".exp-money");
     const balanceMoney = document.querySelector(".balance");
-    if (inputMoney.value < 0) {
-        exp += -inputMoney.value;
-        console.log(exp);
-        expMoney.innerHTML = `$${exp}.00`;
-    } else {
-        inc += +inputMoney.value;
-        console.log(inc);
-        incMoney.innerHTML = `$${inc}.00`;
-    }
+    expMoney.innerHTML = `$${exp}.00`;
+    incMoney.innerHTML = `$${inc}.00`;
     balance = inc - exp;
     balanceMoney.innerHTML = `$${balance}.00`;
 }
 
 function deleteTransaction(e) {
-    console.log(e.path);
+    const element = e.path.find(function(path) {
+        return path.classList.contains("item");
+    })
+    const value = +element.querySelector('.value').innerHTML
+
+    if (element.classList.contains("item-inc")) {
+        inc -= value
+
+    } else {
+        exp -= -value
+    }
+    updateMoney();
+    element.remove();
 }
+
+
 
 submitBTN.addEventListener("click", addTransaction);
 list.addEventListener("click", deleteTransaction);
