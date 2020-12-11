@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <title>Document</title>
+</head>
+
+<body>
+    <h1>Theo dõi chi tiêu</h1>
+    <div class="container">
+        <div class="wrap-total-form">
+            <h2>Khoản tiền còn lại <span class="balance">$0.00</span></h2>
+            <div class="wrap-total">
+                <div class="total">
+                    <h3>thu nhập</h3>
+                    <p class="inc-money">$0.00</p>
+                </div>
+                <div class="total">
+                    <h3>chi phí</h3>
+                    <p class="exp-money">$0.00</p>
+                </div>
+            </div>
+            <h3>thêm</h3>
+            <form class="form">
+                <div class="form-control">
+                    <h4>Nhập tên</h4>
+                    <input type="text" class="input-name" placeholder="nhập tên......">
+                </div>
+                <div class="form-control">
+                    <h4>Nhập số tiền</h4>
+                    <input type="number" class="input-money" placeholder="nhập số tiền.....">
+                </div>
+                <button class="submit-BTN">
+                    add
+                </button>
+            </form>
+        </div>
+        <div class="warp-list">
+            <h3>danh sách</h3>
+            <ul class="list">
+                <li class="item item-exp">
+                    <span class="name">1</span>
+                    <span class="value">1</span>
+                    <button class="detele-BTN">
+                        <span>x</span>
+                    </button>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <script src="script.js"></script>
+</body>
+
+</html>

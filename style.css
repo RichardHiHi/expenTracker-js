@@ -1,0 +1,183 @@
+        * {
+            box-sizing: border-box;
+        }
+        
+        h1 {
+            text-align: center;
+        }
+        
+        body {
+            width: 800px;
+            margin: 0 auto;
+            font-family: 'Lato', sans-serif;
+        }
+        
+        .container {
+            display: flex;
+            text-align: center;
+            justify-content: center;
+        }
+        
+        .wrap-total-form {
+            width: 400px;
+            padding-right: 50px;
+            border-right: 1px solid #ccc;
+        }
+        
+        .warp-list {
+            width: 400px;
+            padding-left: 50px;
+        }
+        
+        .wrap-total {
+            display: flex;
+            justify-content: center;
+            justify-content: space-around;
+        }
+        
+        .total {
+            box-shadow: 1px 1px 2px rgb(163, 162, 162);
+            width: 200px;
+            margin-left: 10px;
+            border-radius: 25px;
+            background-color: rgb(229, 226, 226);
+        }
+        
+        .inc-money {
+            color: green;
+            font-size: 20px;
+            font-weight: 600;
+        }
+        
+        .exp-money {
+            color: red;
+            font-size: 20px;
+            font-weight: 600;
+        }
+        
+        .form {
+            display: flex;
+            flex-direction: column;
+            /* justify-content: flex-start; */
+            align-items: flex-start;
+            text-align: left;
+        }
+        
+        .input-name,
+        .input-money {
+            flex: 1;
+            width: 350px;
+            height: 35px;
+            padding: 15px 0;
+            border: none;
+            border-bottom: 1px solid black;
+            font-size: 20px;
+        }
+        
+        .input-name:focus,
+        .input-money:focus {
+            outline: none;
+            border-bottom: 1px solid rgb(189, 79, 79);
+        }
+        
+        .input-name::placeholder {
+            color: #4e5672;
+            font-size: 20px
+        }
+        
+        .input-money::placeholder {
+            color: #4e5672;
+            font-size: 20px
+        }
+        
+        .submit-BTN {
+            margin-top: 20px;
+            align-self: center;
+            width: 200px;
+            height: 40px;
+            border-radius: 10px;
+            outline: none;
+            cursor: pointer;
+            font-size: 15px;
+            font-weight: 700;
+            border: none;
+            background-color: rgb(194, 84, 185);
+            box-shadow: 1px 1px 5px rgb(110, 40, 105);
+            color: white;
+        }
+        
+        .submit-BTN:hover {
+            background-color: rgb(143, 60, 136);
+        }
+        
+        .list {
+            list-style: none;
+        }
+        
+        .item {
+            display: flex;
+            justify-content: space-between;
+            background-color: rgb(230, 228, 228);
+            box-shadow: 1px 1px 1px rgb(180, 178, 178);
+            padding: 10px;
+            border-radius: 2px;
+            position: relative;
+            cursor: pointer;
+        }
+        
+        .item.item-inc {
+            border-right: 5px solid forestgreen
+        }
+        
+        .item.item-exp {
+            border-right: 5px solid red;
+        }
+        
+        .detele-BTN {
+            height: 50%;
+            width: 20px;
+            position: absolute;
+            top: 50%;
+            transform: translate(-100%, -50%);
+            left: 0;
+            border-radius: 2px;
+            border: none;
+            background-color: red;
+            color: white;
+            cursor: pointer;
+            font-size: 20px;
+            text-align: center;
+            display: none;
+            animation: fadeIn 1s linear;
+        }
+        
+        .item:hover .detele-BTN {
+            display: block;
+        }
+        
+        @keyframes fadeIn {
+            from {
+                opacity: 0
+            }
+            to {
+                opacity: 1
+            }
+        }
+        
+        .detele-BTN:hover {
+            background-color: rgb(146, 6, 6);
+        }
+        
+        .detele-BTN span {
+            position: absolute;
+            top: -3px;
+            left: 5px;
+        }
+        
+        .detele-BTN:focus {
+            outline: none
+        }
+        
+        .name {}
+        
+        .value {}
