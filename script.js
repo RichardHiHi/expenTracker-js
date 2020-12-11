@@ -3,81 +3,118 @@ const inputName = document.querySelector(".input-name");
 const list = document.querySelector(".list");
 const inputMoney = document.querySelector(".input-money");
 
-let inc = 0,
-    exp = 0,
-    balance = 0;
-// let data = {
-//     total: {
-//         inc: 0,
-//         exp: 0,
-//     }
-//     balance = 0;
-// }
 
-// let transactions = [];
+let data = {
+    total: {
+        inc: 0,
+        exp: 0,
+    },
+    balance: 0,
+    countID: 0
+}
 
 
-// function showTransaction() {
-//     const transaction = {
-//         id: transactions.length,
+let transactionList = [];
 
-//     }
-// }
+
+
 
 function addTransaction(e) {
     e.preventDefault();
-
+    let className;
     if (inputName.value && inputMoney.value) {
-        let addClassList;
         if (inputMoney.value < 0) {
-            addClassList = `item-exp`;
-            exp += -inputMoney.value;
+            className = `item-exp`;
         } else {
-            addClassList = `item-inc`;
-            inc += +inputMoney.value;
+            className = `item-inc`;
         }
-        const item = document.createElement("LI");
-        item.classList.add("item");
-        item.classList.add(addClassList);
-        list.appendChild(item);
-        item.innerHTML = `<span class="name">${inputName.value}</span>
-        <span class="value">${inputMoney.value}</span>
-        <button class="detele-BTN">
-            <span>x</span>
-        </button>`;
-        updateMoney();
+        const transaction = {
+            id: data.countID,
+            className: className,
+            name: inputName.value,
+            money: inputMoney.value,
+        }
+        transactionList.push(transaction);
+        data.countID += 1;
+        updateTransaction();
+        updatelocalStorage()
     } else {
-        alert("mời bạn nhập vào ô nhập");
+        alert('moi ban nhap');
     }
+
+
 }
 
-function updateMoney(inputMoney) {
+function updateTransaction() {
+    //clear list of transactions
+    list.innerHTML = ``;
+
+    transactionList.forEach(function(transaction) {
+        const item = document.createElement("LI");
+        item.classList.add("item");
+        item.classList.add(transaction.className);
+        list.appendChild(item);
+        item.innerHTML = `<span class="name">${transaction.name}</span>
+        <span class="value">${transaction.money}</span>
+        <button class="detele-BTN" onclick="removeTransaction(${transaction.id})">
+            <span>x</span>
+        </button>`;
+    })
+
+    //caculate total of exp
+    const arrExp = transactionList.filter((transaction) => {
+        return transaction.money < 0;
+    })
+    if (arrExp.length > 0) {
+        data.total.exp = arrExp.reduce((acc, transaction) => {
+            return acc + -transaction.money
+        }, 0)
+    } else {
+        data.total.exp = 0;
+    }
+
+
+    //caculate total of inc
+    const arrInc = transactionList.filter((transaction) => {
+        return transaction.money > 0;
+    })
+    if (arrInc.length > 0) {
+        data.total.inc = arrInc.reduce((acc, transaction) => {
+            return acc + +transaction.money;
+        }, 0)
+        console.log(typeof data.total.inc)
+    } else {
+        data.total.inc = 0;
+    }
+
+    //caulate balance
+    data.balance = data.total.inc - data.total.exp;
+    //add to DOM
     const incMoney = document.querySelector(".inc-money");
     const expMoney = document.querySelector(".exp-money");
     const balanceMoney = document.querySelector(".balance");
-    expMoney.innerHTML = `$${exp}.00`;
-    incMoney.innerHTML = `$${inc}.00`;
-    balance = inc - exp;
-    balanceMoney.innerHTML = `$${balance}.00`;
+    expMoney.innerHTML = `$${data.total.exp.toFixed(2)}`;
+    incMoney.innerHTML = `$${data.total.inc.toFixed(2)}`;
+    balanceMoney.innerHTML = `$${data.balance}`;
+    console.log(transactionList);
+};
+
+function updatelocalStorage() {
+    localStorage.setItem('data', JSON.stringify(data));
+    localStorage.setItem('transaction', JSON.stringify(transactionList));
 }
 
-function deleteTransaction(e) {
-    const element = e.path.find(function(path) {
-        return path.classList.contains("item");
-    })
-    const value = +element.querySelector('.value').innerHTML
-
-    if (element.classList.contains("item-inc")) {
-        inc -= value
-
-    } else {
-        exp -= -value
-    }
-    updateMoney();
-    element.remove();
+function removeTransaction(id) {
+    transactionList = transactionList.filter(transaction => transaction.id !== id);
+    updateTransaction();
+    updatelocalStorage();
 }
 
-
+function init() {
+    data = JSON.parse(localStorage.getItem('data'));
+    transactionList = JSON.parse(localStorage.getItem('transaction'));
+    updateTransaction();
+}
 
 submitBTN.addEventListener("click", addTransaction);
-list.addEventListener("click", deleteTransaction);
+init();
